@@ -1,0 +1,15 @@
+README.rst
+setup.py
+iotcaspy/BatchDownloadURLs.py
+iotcaspy/FileUtils.py
+iotcaspy/JupyterUtils.py
+iotcaspy/PandasUtils.py
+iotcaspy/ShellUtils.py
+iotcaspy/UrlUtils.py
+iotcaspy/__init__.py
+iotcaspy/__main__.py
+iotcaspy.egg-info/PKG-INFO
+iotcaspy.egg-info/SOURCES.txt
+iotcaspy.egg-info/dependency_links.txt
+iotcaspy.egg-info/requires.txt
+iotcaspy.egg-info/top_level.txt

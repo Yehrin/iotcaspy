@@ -7,7 +7,7 @@ python 文件处理的工具集
 
 import os
 import hashlib
-import ShellUtils
+from iotcaspy import ShellUtils
 from pathlib2 import Path
 
 
