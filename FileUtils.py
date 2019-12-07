@@ -7,6 +7,8 @@ python 文件处理的工具集
 
 import os
 import hashlib
+import ShellUtils
+from pathlib2 import Path
 
 
 def file_to_list(filepath):
@@ -111,8 +113,36 @@ def load_obj_from_file(filepath):
     return obj
 
 
+def get_file_line_cnts(filepath):
+    """
+    获得文件行数
+    """
+    cnts = 0
+    with open(filepath, 'r') as f:
+        for _ in f:
+            cnts += 1
+    return cnts
 
 
-
-
+def random_split_file(filepath, percent, new_filepath_list=None):
+    """
+    随机按比例拆分文件
+    """
+    if not isinstance(filepath, Path):
+        filepath = Path(filepath)
+    if new_filepath_list is None:
+        new_filepath_list = [filepath.parent/(filepath.stem+'.split1'+filepath.suffix), 
+            filepath.parent/(filepath.stem+'.split2'+filepath.suffix), ]
+    assert len(new_filepath_list) == 2
+    filesize = get_file_line_cnts(filepath)
+    subfilepath1, subfilepath2 = str(new_filepath_list[0]), str(new_filepath_list[1])
+    file1_size = int(filesize*percent)
+    file2_size = filesize - file1_size
+    # 生成文件：
+    tmp_filepath = str(filepath.parent/(filepath.name+'.tmp'))
+    ShellUtils.run_bash('shuf {} -o {}'.format(filepath, tmp_filepath))
+    ShellUtils.run_bash('head -n {} {} > {}'.format(file1_size, tmp_filepath, subfilepath1))
+    ShellUtils.run_bash('head -n {} {} > {}'.format(file2_size, tmp_filepath, subfilepath2))
+    ShellUtils.run_bash('rm {}'.format(tmp_filepath))
+    return (subfilepath1, file1_size), (subfilepath2, file2_size)
 
